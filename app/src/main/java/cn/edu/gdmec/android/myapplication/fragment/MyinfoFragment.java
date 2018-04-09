@@ -58,22 +58,25 @@ public class MyinfoFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.ll_head:
                 if (AnalysisUtils.readLoginStatus(getActivity())){
-
+                //跳转到个人资料界面
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    getActivity().startActivityForResult(intent,1);
                 }else{
+                    //跳转到登录界面
                     Intent intent = new Intent(getActivity(),LoginActivity.class);
                     getActivity().startActivityForResult(intent,1);
                 }
                 break;
             case R.id.rl_course_history:
                 if (AnalysisUtils.readLoginStatus(getActivity())){
-
+                //跳转到播放记录界面
                 }else{
                     Toast.makeText(getActivity(),"您未登录，请先登录",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.rl_setting:
                 if (AnalysisUtils.readLoginStatus(getActivity())){
-
+                //跳转到设置界面
                 }else {
                     Toast.makeText(getActivity(),"您未登录，请先登录",Toast.LENGTH_SHORT).show();
                 }

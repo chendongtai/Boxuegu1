@@ -19,9 +19,9 @@ public class AnalysisUtils {
         return isLogin;
     }
     public static void clearLoginStatus(Context context){
-        SharedPreferences sp = context.getSharedPreferences("islogin",Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("isLogin",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean("islogin",false);
+        editor.putBoolean("isLogin",false);
         editor.putString("loginUserName","");
     }
 }
