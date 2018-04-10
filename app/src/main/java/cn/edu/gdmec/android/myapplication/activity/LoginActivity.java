@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //跳转到找回密码界面
                 Intent intent = new Intent(LoginActivity.this,FindPswActivity.class);
+                intent.putExtra("from","security");
                 startActivity(intent);
             }
         });
