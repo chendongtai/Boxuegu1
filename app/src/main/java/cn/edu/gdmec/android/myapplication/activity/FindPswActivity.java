@@ -47,6 +47,7 @@ public class FindPswActivity extends AppCompatActivity {
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         if ("security".equals(from)) {
             tv_main_title.setText("设置密保");
+            btn_validate.setText("设置");
         } else {
             tv_main_title.setText("找回密码");
             tv_user_name.setVisibility(View.VISIBLE);

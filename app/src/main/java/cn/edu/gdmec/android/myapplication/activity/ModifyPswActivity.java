@@ -17,7 +17,7 @@ import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
 import cn.edu.gdmec.android.myapplication.utils.MD5Utils;
 
 public class ModifyPswActivity extends AppCompatActivity {
-    private TextView tv_main_title,tv_back;
+    private TextView tv_main_title,tv_back, tv_save;
     private EditText et_original_psw,et_new_psw,et_new_psw_again;
     private Button btn_save;
     private String originalPsw,newPsw,newPswAgain;
@@ -36,6 +36,7 @@ public class ModifyPswActivity extends AppCompatActivity {
     private void init(){
         tv_main_title = (TextView) findViewById(R.id.tv_main_title);
         tv_main_title.setText("修改密码");
+        tv_save = (TextView)findViewById(R.id.tv_save);
         tv_back = (TextView) findViewById(R.id.tv_back);
         et_original_psw = (EditText) findViewById(R.id.et_original_psw);
         et_new_psw = (EditText) findViewById(R.id.et_new_psw);
