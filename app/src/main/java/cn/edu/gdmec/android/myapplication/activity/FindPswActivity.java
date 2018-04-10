@@ -83,7 +83,7 @@ public class FindPswActivity extends Activity implements View.OnClickListener {
 
         btn_validate.setOnClickListener(this);
     }
-
+//
     private void submit() {
         String validateName = et_validate_name.getText().toString().trim();
         if (!"security".equals(from)) {
