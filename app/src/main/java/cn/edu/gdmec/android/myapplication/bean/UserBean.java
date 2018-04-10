@@ -11,4 +11,6 @@ public class UserBean {
 
     public String signature;   //签名
 
+    public String qq;    //QQ
+
 }

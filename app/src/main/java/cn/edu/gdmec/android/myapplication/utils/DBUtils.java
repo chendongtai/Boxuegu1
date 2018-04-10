@@ -38,6 +38,7 @@ public class DBUtils {
         cv.put("nickName",bean.nickName);
         cv.put("sex",bean.sex);
         cv.put("signature",bean.signature);
+        cv.put("qq",bean.qq);
         db.insert(SQLiteHelper.U_USERINFO,null,cv);
     }
 
@@ -53,6 +54,7 @@ public class DBUtils {
             bean.nickName = cursor.getString(cursor.getColumnIndex("nickName"));
             bean.sex = cursor.getString(cursor.getColumnIndex("sex"));
             bean.signature = cursor.getString(cursor.getColumnIndex("signature"));
+            bean.qq = cursor.getString(cursor.getColumnIndex("qq"));
         }
 
         cursor.close();
@@ -64,13 +66,8 @@ public class DBUtils {
     //修改个人资料
 
     public void updateUserInfo(String key,String value,String userName){
-
         ContentValues cv = new ContentValues();
-
         cv.put(key,value);
-
         db.update(SQLiteHelper.U_USERINFO,cv,"userName=?", new String[]{userName});
-
     }
-
 }

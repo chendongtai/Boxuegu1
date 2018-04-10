@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +23,14 @@ import cn.edu.gdmec.android.myapplication.utils.DBUtils;
 
 public class UserInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tv_back;
-    private TextView tv_main_title;
+    private TextView tv_main_title,tv_qq;
+    private ImageView iv_head_icon;
     private TextView tv_nickName,tv_signature,tv_user_name,tv_sex;
-    private RelativeLayout rl_nickName,rl_sex,rl_signature,rl_title_bar;
+    private RelativeLayout rl_nickName,rl_sex,rl_signature,rl_title_bar,rl_head,rl_account,rl_qq;
     private  String spUserName;
     private static final int CHANGE_NICKNAME = 1;//修改昵称的自定义常量
     private static final int CHANGE_SIGNATURE = 2;//修改签名的自定义常量
+    private static final int CHANGE_QQ = 3;         //修改qq的自定义常量
     private String new_info;//最新数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +48,27 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_main_title = (TextView) findViewById(R.id.tv_main_title);
         tv_main_title.setText("个人资料");
+        iv_head_icon = findViewById(R.id.iv_head_icon);
         rl_title_bar = (RelativeLayout) findViewById(R.id.rl_title_bar);
         rl_title_bar.setBackgroundColor(Color.parseColor("#30B4FF"));
         rl_nickName = (RelativeLayout) findViewById(R.id.rl_nickName);
         rl_sex = (RelativeLayout) findViewById(R.id.rl_sex);
         rl_signature = (RelativeLayout) findViewById(R.id.rl_signature);
+        rl_qq = findViewById(R.id.rl_qq);
         tv_nickName = (TextView) findViewById(R.id.tv_nickName);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         tv_sex = (TextView) findViewById(R.id.tv_sex);
         tv_signature = (TextView) findViewById(R.id.tv_signature);
+        tv_qq = findViewById(R.id.tv_qq);
+        rl_head = findViewById(R.id.rl_head);
+        rl_account = findViewById(R.id.rl_account);
+
+
     }
     //获取数据
     private void initData(){
-        UserBean bean = null;
-        bean = DBUtils.getInstance(this).getUserInfo(spUserName);
+        UserBean bean = DBUtils.getInstance(this).getUserInfo(spUserName);
+
         //首先判断一下数据库是否有数据
         if (bean == null){
             bean = new UserBean();
@@ -66,6 +76,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
             bean.nickName = "问答精灵";
             bean.sex="男";
             bean.signature = "问答精灵";
+            bean.qq = "";
             //保存用户信息到数据库
             DBUtils.getInstance(this).saveUserInfo(bean);
         }
@@ -77,6 +88,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         tv_user_name.setText(bean.userName);
         tv_sex.setText(bean.sex);
         tv_signature.setText(bean.signature);
+        tv_qq.setText(bean.qq);
     }
     //设置控件的点击监听事件
     private void setListener(){
@@ -84,6 +96,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         rl_nickName.setOnClickListener(this);
         rl_sex.setOnClickListener(this);
         rl_signature.setOnClickListener(this);
+        rl_qq.setOnClickListener(this);
     }
     //控件的点击事件
     @Override
@@ -114,6 +127,13 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 enterActivityForResult(ChangeUserInfoActivity.class,CHANGE_SIGNATURE,bdSignature);
                 //跳转到个人资料修改界面
                 break;
+                case R.id.rl_qq:
+                    String qq = tv_qq.getText().toString();
+                    Bundle bdQq = new Bundle();
+                    bdQq.putString("content",qq);
+                    bdQq.putString("title","Q Q");
+                    bdQq.putInt("flag",3);
+                    enterActivityForResult(ChangeUserInfoActivity.class,CHANGE_QQ,bdQq);
             default:
                 break;
         }
@@ -140,6 +160,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         });
         builder.create().show();
     }
+
 
     private void setSex(String sex){
         tv_sex.setText(sex);
@@ -175,8 +196,20 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                     }
                     tv_signature.setText(new_info);
                     DBUtils.getInstance(UserInfoActivity.this).updateUserInfo("signature",new_info,spUserName);
-                    break;
                 }
+                break;
+            case CHANGE_QQ:
+                if (data != null){
+                    new_info = data.getStringExtra("qq");
+                    if (TextUtils.isEmpty(new_info)){
+                        return;
+                    }
+                    tv_qq.setText(new_info);
+                    DBUtils.getInstance(UserInfoActivity.this).updateUserInfo("qq",new_info,spUserName);
+                }
+                break;
+                default:
+                    break;
         }
     }
 }
