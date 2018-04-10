@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
+
     <include layout="@layout/main_title_bar"/>
     <View
         android:layout_width="fill_parent"
@@ -38,8 +39,9 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="#E3E3E3"/>
+
     <RelativeLayout
-        android:id="@+id/rl_security_settting"
+        android:id="@+id/rl_security_setting"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="#F7F8F8"

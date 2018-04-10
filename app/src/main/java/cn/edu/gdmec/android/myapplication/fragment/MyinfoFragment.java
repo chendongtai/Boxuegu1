@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import cn.edu.gdmec.android.myapplication.R;
+import cn.edu.gdmec.android.myapplication.activity.SettingActivity;
+import cn.edu.gdmec.android.myapplication.activity.UserInfoActivity;
 import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
 import cn.edu.gdmec.android.myapplication.activity.LoginActivity;
 public class MyinfoFragment extends Fragment implements View.OnClickListener {
@@ -59,7 +61,7 @@ public class MyinfoFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_head:
                 if (AnalysisUtils.readLoginStatus(getActivity())){
                 //跳转到个人资料界面
-                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    Intent intent = new Intent(getActivity(),UserInfoActivity.class);
                     getActivity().startActivityForResult(intent,1);
                 }else{
                     //跳转到登录界面
@@ -77,10 +79,17 @@ public class MyinfoFragment extends Fragment implements View.OnClickListener {
             case R.id.rl_setting:
                 if (AnalysisUtils.readLoginStatus(getActivity())){
                 //跳转到设置界面
+                    Intent intent = new Intent(getActivity(), SettingActivity.class);
+                    getActivity().startActivityForResult(intent,1);
                 }else {
                     Toast.makeText(getActivity(),"您未登录，请先登录",Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
     }
 }

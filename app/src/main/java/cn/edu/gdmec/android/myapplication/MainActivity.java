@@ -41,39 +41,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected long exitTime;
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN){
-            if ((System.currentTimeMillis()-exitTime)>2000){
-                Toast.makeText(MainActivity.this,"再按一次退出博学谷",Toast.LENGTH_SHORT).show();
-                exitTime = System.currentTimeMillis();
-            }else{
-                this.finish();
-
-            if (AnalysisUtils.readLoginStatus(this)){
-                AnalysisUtils.clearLoginStatus(this);
-                }
-            System.exit(0);
-            }return true;
-        }
-        return super.onKeyDown(keyCode, event);
-
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         setHome();
-        setSelectStatus(2);
+
     }
     private void setHome(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.main_body,new MyinfoFragment()).commit();
+        // this.getSupportFragmentManager().beginTransaction().add(R.id.main_body, new CourseFragment()).commit();
+        setSelectStatus(2);
     }
+
     private void initView() {
         main_body = (FrameLayout) findViewById(R.id.main_body);
         bottom_bar_text_course = (TextView) findViewById(R.id.bottom_bar_text_course);
@@ -91,6 +74,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         bottom_bar_exercises_btn.setOnClickListener(this);
         bottom_bar_myinfo_btn.setOnClickListener(this);
     }
+
     private void setSelectStatus(int index){
         switch (index){
             case 0:
@@ -102,7 +86,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 bottom_bar_image_exercises.setImageResource(R.drawable.main_exercises_icon);
                 bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon);
-
+                break;
             case 1:
                 bottom_bar_image_exercises.setImageResource(R.drawable.main_exercises_icon_selector);
                 bottom_bar_text_exercises.setTextColor(Color.parseColor("#0097F7"));
@@ -112,7 +96,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 bottom_bar_image_course.setImageResource(R.drawable.main_course_icon);
                 bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon);
-
+                break;
             case 2:
                 bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon_selector);
                 bottom_bar_text_myinfo.setTextColor(Color.parseColor("#0097F7"));
@@ -122,9 +106,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 bottom_bar_image_exercises.setImageResource(R.drawable.main_exercises_icon);
                 bottom_bar_image_course.setImageResource(R.drawable.main_course_icon);
+                break;
         }
     }
-
 
     @Override
     public void onClick(View view) {
@@ -145,15 +129,39 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if ((System.currentTimeMillis() - exitTime) > 2000){
+                Toast.makeText(MainActivity.this,"再按一次退出博学谷",Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            }else{
+                this.finish();
+            if (AnalysisUtils.readLoginStatus(this)){
+                AnalysisUtils.clearLoginStatus(this);
+                }
+            System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(data!=null){
             boolean isLogin=data.getBooleanExtra("isLogin",false);
             if (isLogin){
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,new CourseFragment()).commit();
                 setSelectStatus(0);
+
             }else{
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,new MyinfoFragment()).commit();
                 setSelectStatus(2);
             }
         }
     }
+
 }

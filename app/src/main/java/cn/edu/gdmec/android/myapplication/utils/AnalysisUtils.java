@@ -14,14 +14,17 @@ public class AnalysisUtils {
     }
 
     public static boolean readLoginStatus(Context context){
+        //读取登录状态
         SharedPreferences sp = context.getSharedPreferences("loginInfo",Context.MODE_PRIVATE);
         Boolean isLogin = sp.getBoolean("isLogin",false);
         return isLogin;
     }
     public static void clearLoginStatus(Context context){
-        SharedPreferences sp = context.getSharedPreferences("isLogin",Context.MODE_PRIVATE);
+        //清除登录状态
+        SharedPreferences sp = context.getSharedPreferences("loginInfo",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean("isLogin",false);
         editor.putString("loginUserName","");
+        editor.commit();
     }
 }
