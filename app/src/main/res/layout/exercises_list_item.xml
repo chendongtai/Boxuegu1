@@ -38,7 +38,6 @@
             android:layout_marginTop="2dp"
             android:text=""
             android:textColor="#a3a3a3"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
