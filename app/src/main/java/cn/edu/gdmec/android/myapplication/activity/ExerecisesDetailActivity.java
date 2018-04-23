@@ -1,5 +1,8 @@
-package cn.edu.gdmec.android.myapplication;
+package cn.edu.gdmec.android.myapplication.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +17,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.edu.gdmec.android.myapplication.adapter.ExercisesDetailListItemAdapter;
+import cn.edu.gdmec.android.myapplication.R;
 import cn.edu.gdmec.android.myapplication.bean.ExercisesBean;
 import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
 
-public class ActivityExerecisesDetailActivity extends Activity  {
+public class ExerecisesDetailActivity extends Activity  {
 
     private TextView tv_back,tv_main_title;
     private RecyclerView rv_list;
@@ -27,6 +32,9 @@ public class ActivityExerecisesDetailActivity extends Activity  {
     private List<ExercisesBean> ebl;
     private ExercisesDetailListItemAdapter adapter;
     private RelativeLayout rl_title_bar;
+
+    //  当前答题数
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +62,16 @@ public class ActivityExerecisesDetailActivity extends Activity  {
         tv_back = findViewById(R.id.tv_back);
         tv_main_title = findViewById(R.id.tv_main_title);
         rl_title_bar = findViewById(R.id.rl_title_bar);
+        rl_title_bar.setBackgroundColor(Color.parseColor("#30B4FF"));
         tv_main_title.setText(title);
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityExerecisesDetailActivity.this.finish();
+                ExerecisesDetailActivity.this.finish();
             }
         });
 
-        adapter = new ExercisesDetailListItemAdapter(ActivityExerecisesDetailActivity.this, new ExercisesDetailListItemAdapter.OnSelectListener() {
+        adapter = new ExercisesDetailListItemAdapter(ExerecisesDetailActivity.this, new ExercisesDetailListItemAdapter.OnSelectListener() {
             @Override
             public void onSelectA(int position, ImageView iv_a, ImageView iv_b, ImageView iv_c, ImageView iv_d) {
                 if (ebl.get(position).answer != 1){
@@ -74,6 +83,7 @@ public class ActivityExerecisesDetailActivity extends Activity  {
                     case 1:
                         iv_a.setImageResource(R.drawable.exercises_right_icon);
                         break;
+
                     case 2:
                         iv_b.setImageResource(R.drawable.exercises_right_icon);
                         iv_a.setImageResource(R.drawable.exercises_error_icon);
@@ -88,6 +98,10 @@ public class ActivityExerecisesDetailActivity extends Activity  {
                         break;
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
+
+                count++;
+                showCount(position,ebl.size());
+
             }
 
             @Override
@@ -115,6 +129,10 @@ public class ActivityExerecisesDetailActivity extends Activity  {
                         break;
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
+
+                count++;
+                showCount(position,ebl.size());
+
             }
 
             @Override
@@ -142,6 +160,10 @@ public class ActivityExerecisesDetailActivity extends Activity  {
                         break;
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
+
+                count++;
+                showCount(position,ebl.size());
+
             }
 
             @Override
@@ -169,11 +191,39 @@ public class ActivityExerecisesDetailActivity extends Activity  {
                         break;
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
+
+                count++;
+                showCount(position,ebl.size());
+
             }
         });
         adapter.setData(ebl);
         rv_list = findViewById(R.id.rv_list);
         rv_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         rv_list.setAdapter(adapter);
+
+    }
+
+    private void showCount(int count, int size) {
+        ++count;
+        if (size != 0) {
+            tvDibu.setText("第"+count+"题完成,共"+size+"题");
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (count == ebl.size()) {
+            SharedPreferences sp = getSharedPreferences("content.sp", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean(title, true);
+            editor.apply();
+            setResult(10086,null);
+            finish();
+
+        }
+
     }
 }

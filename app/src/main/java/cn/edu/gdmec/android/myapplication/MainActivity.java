@@ -162,6 +162,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 setSelectStatus(2);
             }
         }
+        if (requestCode == 1001) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_body,new ExercisesFragment()).commit();
+            setSelectStatus(1);
+        }
     }
 
 }

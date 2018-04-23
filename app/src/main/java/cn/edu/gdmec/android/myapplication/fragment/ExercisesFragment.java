@@ -1,5 +1,8 @@
 package cn.edu.gdmec.android.myapplication.fragment;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.LayoutInflater;
@@ -15,6 +18,8 @@ import java.util.List;
 import cn.edu.gdmec.android.myapplication.R;
 import cn.edu.gdmec.android.myapplication.adapter.ExercisesListItemAdapter;
 import cn.edu.gdmec.android.myapplication.bean.ExercisesBean;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class ExercisesFragment extends Fragment  {
@@ -36,46 +41,51 @@ public class ExercisesFragment extends Fragment  {
         adapter = new ExercisesListItemAdapter(getActivity());
         adapter.setData(ebl);
         lvList.setAdapter(adapter);
+        ebl = new ArrayList<ExercisesBean>();
     }
     public void initData(){
+        SharedPreferences sp = getActivity().getSharedPreferences("content.sp", MODE_PRIVATE);
         ebl = new ArrayList<ExercisesBean>();
+
         for (int i=0;i<10;i++){
             ExercisesBean bean = new ExercisesBean();
             bean.id=(i+1);
             switch (i){
                 case 0:
                     bean.title = "第1章 Android基础入门";
-                    bean.content = "共计5题";
+//                    bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_1);
                     break;
                 case 1:
                     bean.title = "第2章 Android UI 开发";
-                    bean.content = "共计5题";
+                   // bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_2);
                     break;
                 case 2:
                     bean.title = "第3章 Activity";
-                    bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_3);
                     break;
                 case 3:
-                    bean.title = "第4章 数据储存";
-                    bean.content = "共计5题";
+                    bean.title = "第4章 数据存储";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_4);
                     break;
                 case 4:
                     bean.title = "第5章 SQLite 数据库";
-                    bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_1);
                     break;
                 case 5:
                     bean.title = "第6章 广播接收者";
-                    bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_2);
                     break;
                 case 6:
                     bean.title = "第7章 服务";
-                    bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_3);
                     break;
                 case 7:
@@ -85,18 +95,25 @@ public class ExercisesFragment extends Fragment  {
                     break;
                 case 8:
                     bean.title = "第9章 网络编程";
-                    bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_1);
                     break;
                 case 9:
                     bean.title = "第10章 高级编程";
-                    bean.content = "共计5题";
+                    bean.content = getContent(sp, bean);
                     bean.background =(R.drawable.exercises_bg_2);
-                    break;
-                default:
                     break;
             }
             ebl.add(bean);
+            if (adapter != null) {
+                adapter.setData(ebl);
+                //adapter.notifyDataSetChanged();
+            }
         }
+    }
+
+    @NonNull
+    private String getContent(SharedPreferences sp, ExercisesBean bean) {
+        return sp.getBoolean(bean.title, false) ? "已完成" : "共计5题";
     }
 }

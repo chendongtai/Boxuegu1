@@ -43,7 +43,7 @@ public class AnalysisUtils {
         List<ExercisesBean> exercisesInfos = null;
         ExercisesBean exercisesInfo = null;
         int type = parser.getEventType();
-        while (type!=XmlPullParser.END_DOCUMENT){
+        while (type != XmlPullParser.END_DOCUMENT){
             switch (type){
                 case XmlPullParser.START_TAG:
                     if ("infos".equals(parser.getName())){

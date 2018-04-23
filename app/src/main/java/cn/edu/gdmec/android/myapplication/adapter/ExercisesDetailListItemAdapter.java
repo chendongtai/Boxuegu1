@@ -1,7 +1,6 @@
-package cn.edu.gdmec.android.myapplication;
+package cn.edu.gdmec.android.myapplication.adapter;
 
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import android.content.Context;
@@ -9,10 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.ImageView;
 
+import cn.edu.gdmec.android.myapplication.R;
 import cn.edu.gdmec.android.myapplication.bean.ExercisesBean;
 import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
 
@@ -29,6 +28,7 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
         this.layoutInflater = LayoutInflater.from(context);
 	    this.onSelectListener = onSelectListener;
     }
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.exercises_detail_list_item,parent,false);
@@ -91,7 +91,7 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 3){
+                    }else if (bean.answer == 4){
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
@@ -162,9 +162,6 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
                         holder.ivC.setImageResource(R.drawable.exercises_right_icon);
                     }
                     break;
-                default:
-                    break;
-
             }
         }
         holder.ivA.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +182,7 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
                     selectedPosition.remove("" + position);
                 }else{
                     selectedPosition.add(position + "");
-                    onSelectListener.onSelectA(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
+                    onSelectListener.onSelectB(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
                 }
             }
         });
@@ -196,7 +193,7 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
                     selectedPosition.remove("" + position);
                 }else{
                     selectedPosition.add(position + "");
-                    onSelectListener.onSelectA(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
+                    onSelectListener.onSelectC(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
                 }
             }
         });
@@ -207,7 +204,7 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
                     selectedPosition.remove("" + position);
                 }else{
                     selectedPosition.add(position + "");
-                    onSelectListener.onSelectA(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
+                    onSelectListener.onSelectD(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
                 }
             }
         });

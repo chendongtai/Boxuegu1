@@ -10,6 +10,5 @@
         android:id="@+id/lv_list"
         android:layout_marginBottom="55dp"
         android:divider="#B4B4B4"
-        android:dividerHeight="1dp">
-    </ListView>
+        android:dividerHeight="1dp"/>
 </LinearLayout>
