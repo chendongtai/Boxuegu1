@@ -1,12 +1,12 @@
 package cn.edu.gdmec.android.myapplication.activity;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,7 +22,7 @@ import cn.edu.gdmec.android.myapplication.R;
 import cn.edu.gdmec.android.myapplication.bean.ExercisesBean;
 import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
 
-public class ExerecisesDetailActivity extends Activity  {
+public class ExercisesDetailActivity extends Activity  {
 
     private TextView tv_back,tv_main_title;
     private RecyclerView rv_list;
@@ -45,13 +45,14 @@ public class ExerecisesDetailActivity extends Activity  {
         ebl = new ArrayList<ExercisesBean>();
         initData();
         initView();
-        rv_list = (RecyclerView) findViewById(R.id.rv_list);
-        tvDibu = (TextView) findViewById(R.id.tv_dibu);
+
     }
     private void initData(){
         try {
             InputStream is = getResources().getAssets().open("chapter" + id + ".xml");
             ebl = AnalysisUtils.getExercisesInfos(is);
+            Log.i("ebl",ebl.size()+"");
+
         }catch (IOException e){
             e.printStackTrace();
         }catch (Exception e){
@@ -64,14 +65,15 @@ public class ExerecisesDetailActivity extends Activity  {
         rl_title_bar = findViewById(R.id.rl_title_bar);
         rl_title_bar.setBackgroundColor(Color.parseColor("#30B4FF"));
         tv_main_title.setText(title);
+        tvDibu = (TextView) findViewById(R.id.tv_dibu);
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ExerecisesDetailActivity.this.finish();
+                ExercisesDetailActivity.this.finish();
             }
         });
 
-        adapter = new ExercisesDetailListItemAdapter(ExerecisesDetailActivity.this, new ExercisesDetailListItemAdapter.OnSelectListener() {
+        adapter = new ExercisesDetailListItemAdapter(ExercisesDetailActivity.this, new ExercisesDetailListItemAdapter.OnSelectListener() {
             @Override
             public void onSelectA(int position, ImageView iv_a, ImageView iv_b, ImageView iv_c, ImageView iv_d) {
                 if (ebl.get(position).answer != 1){
@@ -99,8 +101,8 @@ public class ExerecisesDetailActivity extends Activity  {
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
 
-                count++;
-                showCount(position,ebl.size());
+//              /*  count++;
+//                showCount(position,ebl.size());*/
 
             }
 
@@ -130,8 +132,8 @@ public class ExerecisesDetailActivity extends Activity  {
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
 
-                count++;
-                showCount(position,ebl.size());
+            /*    count++;
+                showCount(position,ebl.size());*/
 
             }
 
@@ -161,8 +163,8 @@ public class ExerecisesDetailActivity extends Activity  {
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
 
-                count++;
-                showCount(position,ebl.size());
+             /*   count++;
+                showCount(position,ebl.size());*/
 
             }
 
@@ -192,27 +194,60 @@ public class ExerecisesDetailActivity extends Activity  {
                 }
                 AnalysisUtils.setABCDEnable(false,iv_a,iv_b,iv_c,iv_d);
 
-                count++;
-                showCount(position,ebl.size());
+             /*   count++;
+                showCount(position,ebl.size());*/
 
             }
         });
         adapter.setData(ebl);
         rv_list = findViewById(R.id.rv_list);
         rv_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rv_list.setHorizontalScrollBarEnabled(true);
+
+
+        rv_list.addItemDecoration(new DividerItemDecoration(this, 1));
+
+        rv_list.setSaveFromParentEnabled(true);
+
+        adapter.setItemListener(new ExercisesDetailListItemAdapter.ItemListener() {
+
+            @Override
+
+            public void onItemClick(View view, int position) {
+
+                count++;
+
+                tvDibu.setText("第"+(position+1)+"题完成，共"+adapter.getItemCount()+"题");
+
+                Log.i("exercises",count+"");
+
+                Log.i("id",id+"");
+
+                if (count==5){
+
+                    AnalysisUtils.saveExercisesStatus(ExercisesDetailActivity.this,id);
+
+                    setResult(RESULT_OK);
+
+                }
+
+            }
+
+        });
+
         rv_list.setAdapter(adapter);
 
     }
 
-    private void showCount(int count, int size) {
+    /*private void showCount(int count, int size) {
         ++count;
         if (size != 0) {
             tvDibu.setText("第"+count+"题完成,共"+size+"题");
         }
 
     }
-
-    @Override
+*/
+    /*@Override
     protected void onDestroy() {
         super.onDestroy();
         if (count == ebl.size()) {
@@ -225,5 +260,5 @@ public class ExerecisesDetailActivity extends Activity  {
 
         }
 
-    }
+    }*/
 }

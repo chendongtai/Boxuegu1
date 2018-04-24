@@ -1,19 +1,23 @@
 package cn.edu.gdmec.android.myapplication.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.ImageView;
+        import java.util.ArrayList;
+        import java.util.List;
 
-import cn.edu.gdmec.android.myapplication.R;
-import cn.edu.gdmec.android.myapplication.bean.ExercisesBean;
-import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
+        import android.app.Activity;
+        import android.content.Context;
+        import android.support.v7.widget.RecyclerView;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.BaseAdapter;
+        import android.widget.TextView;
+        import android.widget.ImageView;
+
+        import cn.edu.gdmec.android.myapplication.R;
+        import cn.edu.gdmec.android.myapplication.bean.ExercisesBean;
+        import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
+
 
 public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<ExercisesDetailListItemAdapter.ViewHolder> {
 
@@ -22,28 +26,32 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
     private Context context;
     private LayoutInflater layoutInflater;
     private OnSelectListener onSelectListener;
+    private ItemListener itemListener;
 
     public ExercisesDetailListItemAdapter(Context context, OnSelectListener onSelectListener) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
-	    this.onSelectListener = onSelectListener;
+        this.onSelectListener = onSelectListener;
     }
+
+
+
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.exercises_detail_list_item,parent,false);
+        View view = inflater.inflate(R.layout.exercises_detail_list_item, parent,
+                false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder,int position){
-        initializeViews(objects.get(position),holder,position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        initializeViews(objects.get(position), holder, position);
     }
 
-    public void setData(List<ExercisesBean> objects){
+    public void setData(List<ExercisesBean> objects) {
         this.objects = objects;
     }
-
 
     @Override
     public long getItemId(int position) {
@@ -55,162 +63,182 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
         return objects.size();
     }
 
-
     private void initializeViews(ExercisesBean object, final ViewHolder holder, final int position) {
+        //TODO implement
+
         ExercisesBean bean = object;
-        if (bean != null){
+        if (bean != null) {
             holder.tvSubject.setText(bean.subject);
             holder.tvA.setText(bean.a);
             holder.tvB.setText(bean.b);
             holder.tvC.setText(bean.c);
             holder.tvD.setText(bean.d);
         }
-        if (!selectedPosition.contains("" + position)){
+        if (!selectedPosition.contains("" + position)) {
             holder.ivA.setImageResource(R.drawable.exercises_a);
             holder.ivB.setImageResource(R.drawable.exercises_b);
             holder.ivC.setImageResource(R.drawable.exercises_c);
             holder.ivD.setImageResource(R.drawable.exercises_d);
             AnalysisUtils.setABCDEnable(true, holder.ivA, holder.ivB, holder.ivC, holder.ivD);
-        }else {
+        } else {
             AnalysisUtils.setABCDEnable(false, holder.ivA, holder.ivB, holder.ivC, holder.ivD);
-            switch (bean.select){
+            switch (bean.select) {
                 case 0:
-                    //用户所选项时正确的
-                    if (bean.answer == 1){
+                    if (bean.answer == 1) {
                         holder.ivA.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 2){
+                    } else if (bean.answer == 2) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 3){
+                    } else if (bean.answer == 3) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 4){
+                    } else if (bean.answer == 4) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
                         holder.ivD.setImageResource(R.drawable.exercises_right_icon);
                     }
                     break;
-                case 1://用户所选项A是错误的
+                case 1:
                     holder.ivA.setImageResource(R.drawable.exercises_error_icon);
-                    if (bean.answer == 2){
+                    if (bean.answer == 2) {
                         holder.ivB.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 3){
+                    } else if (bean.answer == 3) {
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 4){
+                    } else if (bean.answer == 4) {
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
                         holder.ivD.setImageResource(R.drawable.exercises_right_icon);
                     }
                     break;
-                case 2://用户所选项B是错误的
+                case 2:
                     holder.ivB.setImageResource(R.drawable.exercises_error_icon);
-                    if (bean.answer == 1){
+                    if (bean.answer == 1) {
                         holder.ivA.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 3){
+                    } else if (bean.answer == 3) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivC.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 4){
+                    } else if (bean.answer == 4) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
                         holder.ivD.setImageResource(R.drawable.exercises_right_icon);
                     }
                     break;
-                case 3://用户所选项C是错误的
+                case 3:
                     holder.ivC.setImageResource(R.drawable.exercises_error_icon);
-                    if (bean.answer == 1){
+                    if (bean.answer == 1) {
                         holder.ivA.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 2){
+                    } else if (bean.answer == 2) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivD.setImageResource(R.drawable.exercises_d);
-                    }else if (bean.answer == 4){
+                    } else if (bean.answer == 4) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivD.setImageResource(R.drawable.exercises_right_icon);
                     }
                     break;
-                case 4://用户所选项D是错误的
+                case 4:
                     holder.ivD.setImageResource(R.drawable.exercises_error_icon);
-                    if (bean.answer == 1){
+                    if (bean.answer == 1) {
                         holder.ivA.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
-                    }else if (bean.answer == 2){
+                    } else if (bean.answer == 2) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_right_icon);
                         holder.ivC.setImageResource(R.drawable.exercises_c);
-                    }else if (bean.answer == 3){
+                    } else if (bean.answer == 3) {
                         holder.ivA.setImageResource(R.drawable.exercises_a);
                         holder.ivB.setImageResource(R.drawable.exercises_b);
                         holder.ivC.setImageResource(R.drawable.exercises_right_icon);
                     }
                     break;
+
             }
+
         }
         holder.ivA.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (selectedPosition.contains("" + position)){
-                    selectedPosition.remove("" + position);
-                }else{
-                    selectedPosition.add(position + "");
-                    onSelectListener.onSelectA(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
+            public void onClick(View v) {
+                if (itemListener!=null){
+                    itemListener.onItemClick(v,position);
                 }
+                if (selectedPosition.contains("" + position)) {
+                    selectedPosition.remove("" + position);
+                } else {
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectA(position, holder.ivA,
+                        holder.ivB, holder.ivC, holder.ivD);
             }
         });
         holder.ivB.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (selectedPosition.contains("" + position)){
-                    selectedPosition.remove("" + position);
-                }else{
-                    selectedPosition.add(position + "");
-                    onSelectListener.onSelectB(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
+            public void onClick(View v) {
+                if (itemListener!=null){
+                    itemListener.onItemClick(v,position);
                 }
+                if (selectedPosition.contains("" + position)) {
+                    selectedPosition.remove("" + position);
+                } else {
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectB(position, holder.ivA,
+                        holder.ivB, holder.ivC, holder.ivD);
             }
         });
         holder.ivC.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (selectedPosition.contains("" + position)){
-                    selectedPosition.remove("" + position);
-                }else{
-                    selectedPosition.add(position + "");
-                    onSelectListener.onSelectC(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
+            public void onClick(View v) {
+                if (itemListener!=null){
+                    itemListener.onItemClick(v,position);
                 }
+                if (selectedPosition.contains("" + position)) {
+                    selectedPosition.remove("" + position);
+                } else {
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectC(position, holder.ivA,
+                        holder.ivB, holder.ivC, holder.ivD);
             }
         });
         holder.ivD.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (selectedPosition.contains("" + position)){
-                    selectedPosition.remove("" + position);
-                }else{
-                    selectedPosition.add(position + "");
-                    onSelectListener.onSelectD(position,holder.ivA,holder.ivB,holder.ivC,holder.ivD);
+            public void onClick(View v) {
+                if (itemListener!=null){
+                    itemListener.onItemClick(v,position);
                 }
+                if (selectedPosition.contains("" + position)) {
+                    selectedPosition.remove("" + position);
+                } else {
+                    selectedPosition.add(position + "");
+                }
+                onSelectListener.onSelectD(position, holder.ivA,
+                        holder.ivB, holder.ivC, holder.ivD);
             }
         });
+
     }
 
-    protected class ViewHolder extends RecyclerView.ViewHolder{
+
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvSubject;
         private ImageView ivA;
         private TextView tvA;
@@ -220,6 +248,7 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
         private TextView tvC;
         private ImageView ivD;
         private TextView tvD;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -232,16 +261,39 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
             tvC = (TextView) view.findViewById(R.id.tv_c);
             ivD = (ImageView) view.findViewById(R.id.iv_d);
             tvD = (TextView) view.findViewById(R.id.tv_d);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+
         }
     }
-    public interface OnSelectListener{
-        void onSelectA(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
-        void onSelectB(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
-        void onSelectC(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
-        void onSelectD(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
-    }
-    public interface onItemListener{
-        void onItem(View view,int position);
+
+    public interface OnSelectListener {
+        void onSelectA(int position, ImageView iv_a,
+                       ImageView iv_b, ImageView iv_c,
+                       ImageView iv_d);
+
+        void onSelectB(int position, ImageView iv_a,
+                       ImageView iv_b, ImageView iv_c,
+                       ImageView iv_d);
+
+        void onSelectC(int position, ImageView iv_a,
+                       ImageView iv_b, ImageView iv_c,
+                       ImageView iv_d);
+
+        void onSelectD(int position, ImageView iv_a,
+                       ImageView iv_b, ImageView iv_c,
+                       ImageView iv_d);
     }
 
+    public interface ItemListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setItemListener(ItemListener itemListener) {
+        this.itemListener = itemListener;
+    }
 }
+
