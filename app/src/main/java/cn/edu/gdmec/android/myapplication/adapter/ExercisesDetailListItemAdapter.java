@@ -240,4 +240,8 @@ public class ExercisesDetailListItemAdapter extends RecyclerView.Adapter<Exercis
         void onSelectC(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
         void onSelectD(int position,ImageView iv_a,ImageView iv_b,ImageView iv_c,ImageView iv_d);
     }
+    public interface onItemListener{
+        void onItem(View view,int position);
+    }
+
 }

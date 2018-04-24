@@ -79,7 +79,8 @@ public class ExercisesListItemAdapter extends BaseAdapter {
                     intent.putExtra("id",bean.id);
                     intent.putExtra("title",bean.title);
                     intent.putExtra("content",bean.content);
-                    ((Activity)context).startActivityForResult(intent,1001);
+                    ((Activity)context).startActivity(intent);
+
                 }
             });
         }

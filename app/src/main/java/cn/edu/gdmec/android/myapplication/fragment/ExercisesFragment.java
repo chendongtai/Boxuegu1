@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,4 +117,20 @@ public class ExercisesFragment extends Fragment  {
     private String getContent(SharedPreferences sp, ExercisesBean bean) {
         return sp.getBoolean(bean.title, false) ? "已完成" : "共计5题";
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Toast.makeText(getContext(),"dangqian"+ isVisibleToUser, Toast.LENGTH_SHORT).show();
+        if (!isVisibleToUser){
+            initData();
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Toast.makeText(getContext(),"dangqian"+ hidden, Toast.LENGTH_SHORT).show();
+    }
+
 }

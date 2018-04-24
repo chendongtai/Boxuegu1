@@ -1,9 +1,8 @@
-package cn.edu.gdmec.android.myapplication;
+package cn.edu.gdmec.android.myapplication.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,12 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.edu.gdmec.android.myapplication.R;
 import cn.edu.gdmec.android.myapplication.fragment.CourseFragment;
 import cn.edu.gdmec.android.myapplication.fragment.ExercisesFragment;
 import cn.edu.gdmec.android.myapplication.fragment.MyinfoFragment;
 import cn.edu.gdmec.android.myapplication.utils.AnalysisUtils;
-
-import static java.lang.System.currentTimeMillis;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
 
