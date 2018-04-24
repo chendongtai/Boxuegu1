@@ -5,7 +5,7 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/main_adbanner"/>
+    <include layout="@layout/main_adbanner" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,8 @@
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
-            android:src="@drawable/course_intro_icon"/>
+            android:src="@drawable/course_intro_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -25,14 +26,15 @@
             android:text="Android 基础教程1-10章视频"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="#E4E4E4"/>
+        android:background="#E4E4E4" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"

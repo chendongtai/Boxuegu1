@@ -118,7 +118,7 @@ public class CourseFragment extends Fragment  {
         rv_list.setLayoutManager(new GridLayoutManager(getActivity(),3));
         rv_list.setAdapter(adapter);
 
-        vp_advertBanner = view.findViewById(R.id.vp_adverBanner);
+        vp_advertBanner = view.findViewById(R.id.vp_advertBanner);
         rl_adBanner = view.findViewById(R.id.rl_adBanner);
 
         viewList = new ArrayList<>();
