@@ -13,9 +13,10 @@ import android.os.Build;
 
 
 public class SQLiteHelper extends SQLiteOpenHelper {
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     public static String DB_NAME="bxg.db";
     public static final String U_USERINFO = "userinfo";
+    public static final String U_VIDEO_PLAY_LIST = "videoplaylist";
     public SQLiteHelper(Context context) {
         super(context,DB_NAME,null,DB_VERSION);
     }
@@ -31,11 +32,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 +"signature VARCHAR,"    //签名
                 +"qq VARCHAR"//qq
                 +")");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + U_VIDEO_PLAY_LIST + "("
+                +"_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +"userName VARCHAR, "
+                +"chapterId INT, "
+                +"videoId INT, "
+                +"videoPath VARCHAR, "
+                +"title VARCHAR, "
+                +"secondTitle VARCHAR"
+                +")");
     }//当数据库版本号增加时才会调用下面的方法
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+ U_USERINFO);
+        db.execSQL("DROP TABLE IF EXISTS "+ U_VIDEO_PLAY_LIST);
         onCreate(db);
     }
 }

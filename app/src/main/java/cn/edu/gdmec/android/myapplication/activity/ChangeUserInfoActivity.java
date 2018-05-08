@@ -180,7 +180,6 @@ public class ChangeUserInfoActivity extends AppCompatActivity {
                         }
                         break;
                     default:
-
                         break;
                 }
             }

@@ -53,8 +53,6 @@ public class CourseFragment extends Fragment  {
             switch (msg.what){
                 case MSG_AD_SLID:
                     if (viewPagerAdapter.getCount() > 0) {
-                        System.out.println(vp_advertBanner.getCurrentItem());
-                        System.out.println(viewList.size());
                         if (vp_advertBanner.getCurrentItem()==(viewList.size()-1)){
                             vp_advertBanner.setCurrentItem(0);
                         }else {
